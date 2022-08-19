@@ -47,7 +47,6 @@ namespace SolarCoffee.Web.Serialization
         /// <returns></returns>
         private static List<SalesOrderItemModel> SerializeSalesOrderItems(IEnumerable<SalesOrderItem> items)
         { 
-            
             return items.Select(item => new SalesOrderItemModel { 
                 Id = item.Id,
                 Product = ProductMapper.SerializeToViewModel(item.Product),

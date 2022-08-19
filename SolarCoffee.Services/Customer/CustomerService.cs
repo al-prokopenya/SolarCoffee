@@ -37,8 +37,8 @@ namespace SolarCoffee.Services
         {
             return _db.Customers
                 .Include(c => c.PrimaryAddress)
-                .First(c=>c.Id == id);
-            }
+                .First(c => c.Id == id);
+        }
         /// <summary>
         /// Deletes customer record
         /// </summary>
