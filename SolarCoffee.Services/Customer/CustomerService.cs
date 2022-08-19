@@ -35,8 +35,10 @@ namespace SolarCoffee.Services
         /// <returns></returns>
         public Customer GetById(int id)
         {
-            return _db.Customers.Find(id);
-        }
+            return _db.Customers
+                .Include(c => c.PrimaryAddress)
+                .First(c=>c.Id == id);
+            }
         /// <summary>
         /// Deletes customer record
         /// </summary>
@@ -107,7 +109,7 @@ namespace SolarCoffee.Services
                 {
                     Data = customer,
                     IsSuccess = false,
-                    Message = ex.StackTrace
+                    Message = $"{ex.Message}\n{ex.StackTrace}"
                 };
             }
         }

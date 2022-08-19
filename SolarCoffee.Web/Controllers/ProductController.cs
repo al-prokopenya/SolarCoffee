@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolarCoffee.Services;
 using SolarCoffee.Web.Serialization;
+
 namespace SolarCoffee.Web.Controllers
 {
     [ApiController]
@@ -25,6 +26,16 @@ namespace SolarCoffee.Web.Controllers
                 .Select(ProductMapper.SerializeToViewModel);
 
             return Ok(productViewModels);
+        }
+
+        [HttpPatch("/api/product/{id}")]
+        public ActionResult ArchiveProduct(int id)
+        {
+            _logger.LogInformation("Archiving the product");
+
+            var result = _productService.ArchiveProduct(id);
+
+            return Ok(result);
         }
     }
 }

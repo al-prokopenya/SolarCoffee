@@ -1,8 +1,25 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-namespace SolarCoffee.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SolarCoffee.Web.ViewModels
 {
-    public class CustomerAddress
+    public class CustomerModel
+    {
+        public int Id { get; set; }
+
+        [MaxLength(100)]
+        public string Name { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime UpdatedOn { get; set; }
+
+        [MaxLength(100)]
+        public string LastName { get; set; }
+
+        public CustomerAddressModel PrimaryAddress { get; set; }
+    }
+
+    public class CustomerAddressModel
     {
         public int Id { get; set; }
 
