@@ -21,14 +21,18 @@
       </tr>
       <tr v-for="item in inventory" :key="item.id">
         <td>{{ item.product.name }}</td>
-        <td>{{ item.quantityOnHand }}</td>
+        <td :class="`${appplyColor(item.quantityOnHand, item.idealQuantity)}`">
+          {{ item.quantityOnHand }}
+        </td>
         <td>{{ $filters.price(item.product.price) }}</td>
         <td>
           <span v-if="item.product.isTaxable"> yes </span>
           <span v-else>no</span>
         </td>
         <td>
-          <div>X</div>
+          <div class="product-archive" @click="archiveProduct(item.product.id)">
+            <i class="lni lni-cross-circle"></i>
+          </div>
         </td>
       </tr>
     </table>
@@ -55,6 +59,11 @@ import ShipmentModal from "@/components/modals/ShipmentModal.vue";
 import NewProductModal from "@/components/modals/NewProductModal.vue";
 import { IShipment } from "@/types/Shipment";
 import { IProduct } from "@/types/Product";
+import { InventoryService } from "@/services/inventory-service";
+import { ProductService } from "@/services/product-service";
+
+const inventoryService = new InventoryService();
+const productService = new ProductService();
 
 @Options({
   name: "Inventory",
@@ -63,6 +72,25 @@ import { IProduct } from "@/types/Product";
 export default class Inventory extends Vue {
   isNewProductVisible = false;
   isShipmentVisible = false;
+
+  async archiveProduct(id: number) {
+    await productService.deleteProduct(id);
+    await this.fetchData();
+  }
+
+  async saveNewProduct(newProduct: IProduct) {
+    await productService.saveNewProduct(newProduct);
+    this.isNewProductVisible = false;
+    await this.fetchData();
+  }
+
+  appplyColor(value: number, target: number) {
+    if (value <= 0) return "red";
+
+    if (Math.abs(value - target) > 8) return "yellow";
+
+    return "green";
+  }
 
   inventory: IProductInventory[] = [
     {
@@ -109,16 +137,47 @@ export default class Inventory extends Vue {
     this.isShipmentVisible = false;
     this.isNewProductVisible = false;
   }
-  saveNewProduct(product: IProduct) {
-    console.log("new product:");
-    console.log(product);
+
+  async saveNewShipment(shipment: IShipment) {
+    await inventoryService.updateInventoryQuantity(shipment);
+
+    this.isShipmentVisible = false;
+
+    await this.fetchData();
   }
 
-  saveNewShipment(shipment: IShipment) {
-    console.log("new shipment:");
-    console.log(shipment);
+  async fetchData() {
+    this.inventory = await inventoryService.getInventory();
+  }
+
+  async created() {
+    await this.fetchData();
   }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import "@/scss/global.scss";
+.green {
+  font-weight: bold;
+  color: $solar-green;
+}
+.yellow {
+  font-weight: bold;
+  color: $solar-yellow;
+}
+.red {
+  font-weight: bold;
+  color: $solar-red;
+}
+.inventory-actions {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+.product-archive {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: $solar-red;
+}
+</style>

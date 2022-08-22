@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolarCoffee.Services;
 using SolarCoffee.Web.Serialization;
+using SolarCoffee.Web.ViewModels;
 
 namespace SolarCoffee.Web.Controllers
 {
@@ -26,6 +27,35 @@ namespace SolarCoffee.Web.Controllers
                 .Select(ProductMapper.SerializeToViewModel);
 
             return Ok(productViewModels);
+        }
+
+        /// <summary>
+        /// Save new product to DB
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("/api/product")]
+        public ActionResult AddProduct([FromBody] ProductModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Adding new product");
+            var newProduct = ProductMapper.SerializeToDataModel(product);
+
+            var newProductResponse = _productService.CreateProduct(newProduct);
+
+            if (newProductResponse.IsSuccess)
+            {
+                var newProductResponseView = ProductMapper.SerializeToViewModel(newProductResponse.Data);
+
+                return Ok(newProductResponseView);
+            }
+
+            throw new Exception(newProductResponse.Message);
         }
 
         [HttpPatch("/api/product/{id}")]

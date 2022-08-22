@@ -27,6 +27,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(builder=>builder
+    .WithOrigins("http://localhost:8080")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
 }
 
 app.UseHttpsRedirection();

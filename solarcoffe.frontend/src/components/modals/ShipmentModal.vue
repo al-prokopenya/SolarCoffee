@@ -5,7 +5,11 @@
       <label for="product">Product recieved</label>
       <select v-model="selectedProduct" class="shipmentItems" id="product">
         <option disabled value="">Select one</option>
-        <option v-for="item in inventory" :value="item" :key="item.product.id">
+        <option
+          v-for="item in inventory"
+          :value="item.product"
+          :key="item.product.id"
+        >
           {{ item.product.name }}
         </option>
       </select>
@@ -63,7 +67,7 @@ export default class ShipmentModal extends Vue {
     this.$emit("close");
   }
   save() {
-    let shipment: IShipment = {
+    const shipment: IShipment = {
       productId: this.selectedProduct.id,
       adjustment: this.qtyRecieved,
     };
