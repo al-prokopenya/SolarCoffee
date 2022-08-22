@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Inventory from "@/views/Inventory.vue";
+import Customers from "@/views/Customers.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,6 +12,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/inventory",
     name: "inventory",
     component: Inventory,
+  },
+  {
+    path: "/customers",
+    name: "customers",
+    component: Customers,
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: Customers,
   },
 ];
 
