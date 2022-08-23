@@ -62,7 +62,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IProductInventory, IProduct } from "@/types/Product";
+import { IProduct } from "@/types/Product";
 import SolarButton from "@/components/SolarButton.vue";
 import SolarModal from "@/components/modals/SolarModal.vue";
 

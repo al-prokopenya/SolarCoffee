@@ -3,10 +3,10 @@
     <h1>Inventory Dashboard</h1>
     <hr />
     <div class="inventory-actions">
-      <solar-button @click="showNewProductModal" id="addNewBtn">
+      <solar-button @button:click="showNewProductModal" id="addNewBtn">
         Add new item
       </solar-button>
-      <solar-button @click="showShipmentModal" id="recieveShipmentBtn">
+      <solar-button @button:click="showShipmentModal" id="recieveShipmentBtn">
         Recieve Shipment
       </solar-button>
     </div>

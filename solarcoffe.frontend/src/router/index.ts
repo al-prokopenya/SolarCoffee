@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Inventory from "@/views/Inventory.vue";
 import Customers from "@/views/Customers.vue";
+import OrdersView from "@/views/OrdersView.vue";
+import CreateInvoice from "@/views/CreateInvoice.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,8 +22,13 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/orders",
-    name: "Orders",
-    component: Customers,
+    name: "orders",
+    component: OrdersView,
+  },
+  {
+    path: "/invoice/new",
+    name: "Create-invoice",
+    component: CreateInvoice,
   },
 ];
 
