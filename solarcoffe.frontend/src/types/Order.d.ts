@@ -1,5 +1,5 @@
 import { ICustomer } from "@/types/customer";
-import { ILineItem } from "@/types/invoice";
+import { ILineItem } from "@/types/Invoice";
 
 export interface IOrder {
   id: number;

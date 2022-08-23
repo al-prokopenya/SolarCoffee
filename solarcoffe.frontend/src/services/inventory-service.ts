@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IProductInventory } from "@/types/Product";
 import { IShipment } from "@/types/Shipment";
+import { IInventoryTimeline } from "@/types/InventoryGraph";
 
 /**
  * Inventory service
@@ -17,6 +18,12 @@ export class InventoryService {
 
   public async updateInventoryQuantity(shipment: IShipment): Promise<any> {
     const result = await axios.patch(`${this.API_URL}/inventory/`, shipment);
+    return result.data;
+  }
+
+  public async getSnapshotsHistory(): Promise<IInventoryTimeline> {
+    const result = await axios.get(`${this.API_URL}/inventory/shapshot`);
+
     return result.data;
   }
 }
