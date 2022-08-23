@@ -56,11 +56,9 @@ namespace SolarCoffee.Services
                 item.Product = _productService
                     .GetProduct(item.Product.Id);
 
-                var inventoryId = _inventoryService
-                    .GetByProductId(item.Product.Id).Id;
 
                 _inventoryService
-                    .UpdateUnitsAvailable(inventoryId, -item.Quantity);
+                    .UpdateUnitsAvailable(item.Product.Id, -item.Quantity);
             }
 
             try

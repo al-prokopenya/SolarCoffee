@@ -22,7 +22,7 @@ export class InventoryService {
   }
 
   public async getSnapshotsHistory(): Promise<IInventoryTimeline> {
-    const result = await axios.get(`${this.API_URL}/inventory/shapshot`);
+    const result = await axios.get(`${this.API_URL}/inventory/snapshot`);
 
     return result.data;
   }

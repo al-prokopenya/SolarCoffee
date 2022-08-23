@@ -19,6 +19,5 @@ namespace SolarCoffee.Data
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
         public virtual DbSet<SalesOrderItem> SalesOrderItems { get; set; }
 
-
     }
 }

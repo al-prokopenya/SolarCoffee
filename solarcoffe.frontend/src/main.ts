@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import moment from "moment";
+import VueApexCharts from "vue3-apexcharts";
 
 const app = createApp(App);
 
@@ -18,4 +19,4 @@ app.config.globalProperties.$filters = {
   },
 };
 
-app.use(store).use(router).mount("#app");
+app.use(VueApexCharts).use(store).use(router).mount("#app");
