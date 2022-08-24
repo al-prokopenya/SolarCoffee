@@ -93,7 +93,7 @@ namespace SolarCoffee.Web.Controllers
                 return BadRequest("Error retrieving history");
 
             }
-            return Ok();
+          //  return Ok();
         }
     }
 }

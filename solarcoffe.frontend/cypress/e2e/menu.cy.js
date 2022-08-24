@@ -1,6 +1,6 @@
 context("SideMenu", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:8080/");
+    cy.visit("https://solar-coffee.vercel.app/");
   });
 
   it("is visits the inventory by click logo", () => {

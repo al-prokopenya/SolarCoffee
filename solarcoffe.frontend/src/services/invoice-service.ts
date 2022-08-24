@@ -4,7 +4,7 @@ import { IInvoice } from "@/types/Invoice";
 export default class InvoiceService {
   private API_URL = process.env.VUE_APP_API_URL;
 
-  public async makeNewInvoice(invoice: IInvoice): Promise<boolean> {
+  public async makeNewInvoice(invoice: IInvoice): Promise<any> {
     const now = new Date();
     invoice.createdOn = now;
     invoice.updatedOn = now;

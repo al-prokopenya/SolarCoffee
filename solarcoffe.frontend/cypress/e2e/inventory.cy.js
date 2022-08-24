@@ -1,6 +1,6 @@
 context("Inventory", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:8080/");
+    cy.visit("https://solar-coffee.vercel.app/");
   });
 
   it("is inventory page", () => {
@@ -53,7 +53,7 @@ context("Inventory", () => {
     cy.get("#addNewBtn").click();
     cy.get("#isTaxable").click();
     cy.get("#productName").clear();
-    cy.get("#productName").type("zzTest Archive", { delay: 50 });
+    cy.get("#productName").type("яяTest Archive", { delay: 50 });
 
     cy.get("#productDesc").clear();
     cy.get("#productDesc").type("some description", { delay: 50 });
@@ -63,10 +63,10 @@ context("Inventory", () => {
 
     cy.get("[aria-label='save new product'] > button").click();
 
-    cy.get("table").contains("td", "zzTest Archive");
+    cy.get("table").contains("td", "яяTest Archive");
 
     cy.get("#inventory-table > tr > td > div").last().click();
 
-    cy.get("table").contains("td", "zzTest Archive").should("not.exist");
+    cy.get("table").contains("td", "яяTest Archive").should("not.exist");
   });
 });

@@ -34,9 +34,9 @@ namespace SolarCoffee.Web.Controllers
             var order = OrderMapper.SerializeToSalesOrder(invoice);
             order.Customer = _customerService.GetById(invoice.CustomerId);
 
-            _orderService.GenerateOpenOrder(order);
+            var res = _orderService.GenerateOpenOrder(order);
 
-            return Ok();
+            return Ok(res);
         }
 
         [HttpGet("/api/order")]

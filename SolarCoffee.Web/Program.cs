@@ -3,14 +3,15 @@ using SolarCoffee.Data;
 using System.Configuration;
 using SolarCoffee.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SolarDbContext>(opts => {
     opts.EnableDetailedErrors();
-    //opts.us
-    opts.UseNpgsql(builder.Configuration.GetConnectionString("solar.dev"));
+    opts.UseInMemoryDatabase("demo");
+    //opts.UseNpgsql(builder.Configuration.GetConnectionString("solar.dev"));
 });
 
 builder.Services.AddTransient<IProductService, ProductService>();
@@ -22,23 +23,35 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8081")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 
     app.UseCors(builder=>builder
-    .WithOrigins("http://localhost:8080")
+    .WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8081")
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
 }
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseHttpsRedirection();
+
+//app.UseAuthorization();
 
 app.MapControllers();
 
