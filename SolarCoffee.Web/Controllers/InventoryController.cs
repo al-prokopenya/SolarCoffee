@@ -50,6 +50,8 @@ namespace SolarCoffee.Web.Controllers
 
             var inventory = _inventoryService.UpdateUnitsAvailable(shipment.ProductId,shipment.Adjustment);
 
+            
+
             return Ok(inventory);
         }
 

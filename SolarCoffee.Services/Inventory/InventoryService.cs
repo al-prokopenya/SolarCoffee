@@ -50,14 +50,7 @@ namespace SolarCoffee.Services
 
                 inventory.QuantityOnHand += adjustment;
 
-                try
-                {
-                    CreateSnapshot(inventory);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Error creating inventory snapshot\n{ex.StackTrace}");
-                }
+                CreateFullSnapshot().Wait();
 
                 _db.SaveChanges();
 
@@ -107,10 +100,27 @@ namespace SolarCoffee.Services
                 .ToList();
         }
 
+
+        public async Task CreateFullSnapshot()
+        {
+            try
+            {
+                await _db.ProductInventories
+                    .Include(i => i.Product)
+                    .Where(i => !i.Product.IsArchived)
+                    .ForEachAsync(CreateInventorySnapshot);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating inventory snapshot\n{ex.StackTrace}");
+            }
+        }
+
+
         /// <summary>
         /// Creates a snapshot record using the provided product inventory instance
         /// </summary>
-        private void CreateSnapshot(ProductInventory inventory)
+        private void CreateInventorySnapshot(ProductInventory inventory)
         {
             var snapshot = new ProductInventorySnapshot
             {

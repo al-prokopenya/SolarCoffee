@@ -164,7 +164,6 @@ import SolarButton from "@/components/SolarButton.vue";
 import { CustomerService } from "@/services/customer-service";
 import { InventoryService } from "@/services/inventory-service";
 import InvoiceService from "@/services/invoice-service";
-import { ProductService } from "@/services/product-service";
 import { ICustomer } from "@/types/Customer";
 import { IInvoice, ILineItem } from "@/types/Invoice";
 import { IProductInventory } from "@/types/Product";
@@ -284,7 +283,7 @@ export default class CreateInvoice extends Vue {
 
     const canvas = await html2canvas(invoice as HTMLElement);
     const image = canvas.toDataURL("image/png");
-    pdf.addImage(image, "PNG", 100, 100, width * 0.99, height * 0.99);
+    pdf.addImage(image, "PNG", 100, 100, width * 0.7, height * 0.7);
     pdf.save("invoice");
   }
 
@@ -321,8 +320,6 @@ export default class CreateInvoice extends Vue {
 .invoice-steps-actions {
   display: flex;
   width: 100%;
-}
-.invoice-step {
 }
 .invoice-step-detail {
   margin: 1.2rem;
