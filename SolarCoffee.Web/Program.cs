@@ -10,8 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SolarDbContext>(opts => {
     opts.EnableDetailedErrors();
-    opts.UseInMemoryDatabase("demo");
+    //opts.UseInMemoryDatabase("demo");
+    //opts.use
+    //opts.UseSqlServer(builder.Configuration.GetConnectionString("mssql.dev"));
     //opts.UseNpgsql(builder.Configuration.GetConnectionString("solar.dev"));
+    opts.UseSqlite(builder.Configuration.GetConnectionString("sqlite.dev"));
 });
 
 builder.Services.AddTransient<IProductService, ProductService>();
@@ -28,7 +31,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         builder =>
         {
-            builder.WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8081")
+            builder.WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8080")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
         });
@@ -42,7 +45,7 @@ var app = builder.Build();
     app.UseSwaggerUI();
 
     app.UseCors(builder=>builder
-    .WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8081")
+    .WithOrigins("https://solar-coffee.vercel.app", "http://localhost:8080")
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
@@ -50,7 +53,6 @@ var app = builder.Build();
 
 
 //app.UseHttpsRedirection();
-
 //app.UseAuthorization();
 
 app.MapControllers();

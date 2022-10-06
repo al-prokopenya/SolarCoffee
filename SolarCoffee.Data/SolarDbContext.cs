@@ -5,7 +5,7 @@ using System;
 
 namespace SolarCoffee.Data
 {
-    public class SolarDbContext : IdentityDbContext
+    public class SolarDbContext : DbContext
     {
         public SolarDbContext() { }
 

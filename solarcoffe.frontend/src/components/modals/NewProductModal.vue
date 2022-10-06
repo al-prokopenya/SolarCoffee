@@ -33,6 +33,7 @@
         <li>
           <label for="productPrice">Price (USD)</label>
           <input
+            v-on:keyup=""
             type="number"
             id="productPrice"
             v-model="newProduct.price"
